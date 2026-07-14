@@ -29,8 +29,12 @@ jobs:
         working-directory: colab-live-browser
         run: gradle assembleDebug --no-daemon
 
+      - name: Tìm APK thật đã tạo ra (chẩn đoán, để biết đúng đường dẫn)
+        run: find colab-live-browser -name "*.apk" -exec ls -lh {} \;
+
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: colab-live-browser-debug-apk
-          path: colab-live-browser/app/build/outputs/apk/debug/app-debug.apk
+          path: colab-live-browser/**/*.apk
+          if-no-files-found: warn
